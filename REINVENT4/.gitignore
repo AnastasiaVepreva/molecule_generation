@@ -1,0 +1,16 @@
+__pycache__
+.vscode
+.idea/
+.env
+*.pyc
+
+# Coverage.py output
+.coverage
+htmlcov/
+
+# Python memory_profiler output
+mprofile_*.dat
+
+/reinvent.egg-info/*
+/reinvent.egg-info/dependency_links.txt
+/build/
