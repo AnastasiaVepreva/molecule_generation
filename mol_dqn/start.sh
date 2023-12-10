@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export PYTHONPATH=/workspace/molecule_generation:/workspace/molecule_generation/mol_dqn
+echo "# Adding module mol_dqn into PYTHONPATH" >> ~/.bashrc
+echo "export PYTHONPATH=\$PYTHONPATH:/workspace/molecule_generation:/workspace/molecule_generation/mol_dqn" >> ~/.bashrc
 cd /workspace/molecule_generation/mol_dqn
 git config --global user.email "peterzhilyaev@gmail.com"
 git config --global user.name "Peter Zhilyaev"
