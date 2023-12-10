@@ -1,5 +1,6 @@
 #!/bin/bash
 
+apt-get install python3-libnvinfer
 echo "# Adding module mol_dqn into PYTHONPATH" >> ~/.bashrc
 echo "export PYTHONPATH=\$PYTHONPATH:/workspace/molecule_generation:/workspace/molecule_generation/mol_dqn" >> ~/.bashrc
 cd /workspace/molecule_generation/mol_dqn
