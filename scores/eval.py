@@ -5,6 +5,9 @@ import tensorflow as tf
 from rdkit import Chem
 from rdkit.Chem import AllChem, QED, RDConfig, Lipinski, Descriptors
 from rdkit.DataStructs.cDataStructs import ConvertToNumpyArray
+import statistics
+from rdkit import DataStructs
+from rdkit.Chem import AllChem
 import lightgbm
 import xgboost
 
@@ -74,6 +77,15 @@ def check_lipinski_ro3(mol):
   return counter >= 3
 
 df = pd.read_csv(FILENAME)
+list_smi = df['smiles'].tolist()
+fpgen = AllChem.GetRDKitFPGenerator()
+fps = [fpgen.GetFingerprint(Chem.MolFromSmiles(x)) for x in list_smi]
+
+def check_diversity(mol):
+    fp = fpgen.GetFingerprint(mol)
+    scores = DataStructs.BulkTanimotoSimilarity(fp, fps)
+    
+    return statistics.mean(scores)
 
 df['mol'] = df.smiles.apply(Chem.MolFromSmiles)
 df['bioactivity'] = df.mol.apply(check_bioactivity)
@@ -83,6 +95,7 @@ df['rascore'] = df.mol.apply(check_rascore)
 df['lipinski_ro5'] = df.mol.apply(check_lipinski_ro5)
 df['lipinski_ro3'] = df.mol.apply(check_lipinski_ro3)
 df['tox_groups'] = df.mol.apply(check_toxicophore)
+df['diversity'] = df.mol.apply(check_diversity)
 
 df.drop(columns='mol', inplace=True)
 
